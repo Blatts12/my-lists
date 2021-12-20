@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Entity()
 export class User {
@@ -13,8 +14,10 @@ export class User {
   })
   username: string;
 
-  @Column({
-    unique: true,
-  })
+  @Column()
   password: string;
+
+  async hashPassword() {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
 }
