@@ -1,17 +1,10 @@
-import {
-  Body,
-  Controller,
-  HttpException,
-  HttpStatus,
-  Post,
-  Request,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Post, Req, Res } from '@nestjs/common';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { AuthService } from './auth.service';
-import { LocalAuthGuard } from './local-auth.guard';
+import { LoginDto } from './dto/login.dto';
+import { InvalidCredentialsException } from './invalid-credentials.exception';
 
 @Controller('auth')
 export class AuthController {
@@ -20,23 +13,18 @@ export class AuthController {
     private authService: AuthService,
   ) {}
 
-  @UseGuards(LocalAuthGuard)
   @Post('login')
-  async login(@Request() req) {
-    return await this.authService.login(req.user);
+  async login(@Body() body: LoginDto) {
+    const token = await this.authService.login(body);
+    if (!token) {
+      throw new InvalidCredentialsException();
+    }
+
+    return token;
   }
 
   @Post('reg')
   async register(@Body() createUserDto: CreateUserDto): Promise<User> {
-    return await this.usersService.create(createUserDto).catch((err) => {
-      throw new HttpException(
-        {
-          message: err.message,
-          status: HttpStatus.BAD_REQUEST,
-          error: 'Bad Request',
-        },
-        HttpStatus.BAD_REQUEST,
-      );
-    });
+    return await this.usersService.create(createUserDto);
   }
 }

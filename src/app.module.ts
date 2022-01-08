@@ -4,9 +4,11 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ValidatorsModule } from './validators/validators.module';
 import TypeOrmConfig from './typeorm.config';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     TypeOrmModule.forRootAsync({
       useFactory: () => TypeOrmConfig,
     }),
