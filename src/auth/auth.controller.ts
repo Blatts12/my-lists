@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
@@ -14,8 +14,8 @@ export class AuthController {
   ) {}
 
   @Post('login')
-  async login(@Body() body: LoginDto) {
-    const token = await this.authService.login(body);
+  async login(@Body() loginDto: LoginDto) {
+    const token = await this.authService.login(loginDto);
     if (!token) {
       throw new InvalidCredentialsException();
     }
@@ -23,7 +23,7 @@ export class AuthController {
     return token;
   }
 
-  @Post('reg')
+  @Post('register')
   async register(@Body() createUserDto: CreateUserDto): Promise<User> {
     return await this.usersService.create(createUserDto);
   }
