@@ -13,7 +13,6 @@ export class UsersController {
   async getProfile(@Request() req): Promise<UserProfileDto> {
     const { email, password, ...rest }: User =
       await this.usersService.findOneByUsername(req.user.username);
-    const userProfile: UserProfileDto = rest;
-    return userProfile;
+    return rest;
   }
 }

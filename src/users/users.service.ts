@@ -31,18 +31,18 @@ export class UsersService {
   }
 
   async findOneByEmail(email: string): Promise<User | undefined> {
-    return this.userRepository.findOne({
-      where: {
-        email,
-      },
-    });
+    return this.userRepository
+      .createQueryBuilder('user')
+      .where({ email })
+      .leftJoinAndSelect('user.role', 'role')
+      .getOne();
   }
 
   async findOneByUsername(username: string): Promise<User | undefined> {
-    return this.userRepository.findOne({
-      where: {
-        username,
-      },
-    });
+    return this.userRepository
+      .createQueryBuilder('user')
+      .where({ username })
+      .leftJoinAndSelect('user.role', 'role')
+      .getOne();
   }
 }
