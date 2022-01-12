@@ -17,7 +17,6 @@ async function bootstrap() {
       saveUninitialized: false,
       cookie: {
         maxAge: Number(configService.get('SESS_EXP_TIME')),
-        sameSite: 'lax',
       },
     }),
   );

@@ -1,12 +1,5 @@
-import {
-  Body,
-  Controller,
-  Post,
-  Req,
-  Res,
-  Session,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Response } from 'express';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
@@ -25,14 +18,11 @@ export class AuthController {
 
   @Post('logout')
   @UseGuards(AuthenticatedGuard)
-  async logout(@Session() session, @Res() response) {
-    session.destroy((err) => {
-      if (err) {
-        response.status(400).send('Unable to log out!');
-      } else {
-        response.send('Logout successful!');
-      }
-    });
+  async logout(@Req() request, @Res() response: Response) {
+    request.logOut();
+    response.status(200).clearCookie('connect.sid');
+    request.session.destroy();
+    response.send();
   }
 
   @Post('register')
