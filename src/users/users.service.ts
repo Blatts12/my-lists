@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { validateOrReject } from 'class-validator';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserRole } from './entities/role.entity';
@@ -42,6 +41,14 @@ export class UsersService {
     return this.userRepository
       .createQueryBuilder('user')
       .where({ username })
+      .leftJoinAndSelect('user.role', 'role')
+      .getOne();
+  }
+
+  async findOneById(id: number): Promise<User | undefined> {
+    return this.userRepository
+      .createQueryBuilder('user')
+      .where({ id })
       .leftJoinAndSelect('user.role', 'role')
       .getOne();
   }
