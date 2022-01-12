@@ -4,6 +4,7 @@ import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { AuthenticatedGuard } from './authenticated.guard';
+import RequestWithUser from './dto/request-user.interface';
 import { LocalAuthGuard } from './local-auth.guard';
 
 @Controller('auth')
@@ -12,8 +13,9 @@ export class AuthController {
 
   @Post('login')
   @UseGuards(LocalAuthGuard)
-  async login() {
-    return { msg: 'login.success' };
+  async login(@Req() request: RequestWithUser) {
+    const { password, email, ...rest } = request.user;
+    return { user: rest };
   }
 
   @Post('logout')
