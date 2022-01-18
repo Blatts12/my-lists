@@ -1,7 +1,6 @@
 import { Body, Controller, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { AuthenticatedGuard } from './authenticated.guard';
 import RequestWithUser from './dto/request-user.interface';
@@ -14,8 +13,8 @@ export class AuthController {
   @Post('login')
   @UseGuards(LocalAuthGuard)
   async login(@Req() request: RequestWithUser) {
-    const { password, email, ...rest } = request.user;
-    return { user: rest };
+    const { password, email, ...returnUser } = request.user;
+    return { user: returnUser };
   }
 
   @Post('logout')
@@ -28,10 +27,10 @@ export class AuthController {
   }
 
   @Post('register')
-  async register(@Body() createUserDto: CreateUserDto): Promise<Partial<User>> {
-    const { password, email, ...rest } = await this.usersService.create(
+  async register(@Body() createUserDto: CreateUserDto) {
+    const { password, email, ...returnUser } = await this.usersService.create(
       createUserDto,
     );
-    return rest;
+    return { user: returnUser };
   }
 }
