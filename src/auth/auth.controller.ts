@@ -1,4 +1,12 @@
-import { Body, Controller, Post, Req, Res, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { Response } from 'express';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UsersService } from 'src/users/users.service';
@@ -32,5 +40,11 @@ export class AuthController {
       createUserDto,
     );
     return { user: returnUser };
+  }
+
+  @Get('load')
+  @UseGuards(AuthenticatedGuard)
+  async loadUser(@Req() request: RequestWithUser) {
+    return request.user;
   }
 }
