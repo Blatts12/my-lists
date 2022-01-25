@@ -27,7 +27,7 @@ export class AuthController {
 
   @Post('logout')
   @UseGuards(AuthenticatedGuard)
-  async logout(@Req() request, @Res() response: Response) {
+  async logout(@Req() request, @Res() response) {
     request.logOut();
     response.status(200).clearCookie('connect.sid');
     request.session.destroy();
