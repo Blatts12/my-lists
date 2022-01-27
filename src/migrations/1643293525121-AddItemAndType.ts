@@ -8,24 +8,24 @@ export class AddItemAndType1643293525121 implements MigrationInterface {
       `CREATE TABLE "item_type" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar NOT NULL, CONSTRAINT "UQ_35f9c99ae0d085f062a1da15961" UNIQUE ("name"))`,
     );
     await queryRunner.query(
-      `INTERT INTO "item_type" ("name") VALUES ("MOVIE")`,
+      `INSERT INTO "item_type" ("name") VALUES ("MOVIE")`,
     );
     await queryRunner.query(
-      `INTERT INTO "item_type" ("name") VALUES ("SERIES")`,
+      `INSERT INTO "item_type" ("name") VALUES ("SERIES")`,
     );
     await queryRunner.query(
-      `INTERT INTO "item_type" ("name") VALUES ("ANIME_MOVIE")`,
+      `INSERT INTO "item_type" ("name") VALUES ("ANIME_MOVIE")`,
     );
     await queryRunner.query(
-      `INTERT INTO "item_type" ("name") VALUES ("ANIME_SERIES")`,
+      `INSERT INTO "item_type" ("name") VALUES ("ANIME_SERIES")`,
     );
     await queryRunner.query(
-      `INTERT INTO "item_type" ("name") VALUES ("MANGA")`,
+      `INSERT INTO "item_type" ("name") VALUES ("MANGA")`,
     );
-    await queryRunner.query(`INTERT INTO "item_type" ("name") VALUES ("BOOK")`);
-    await queryRunner.query(`INTERT INTO "item_type" ("name") VALUES ("ART")`);
+    await queryRunner.query(`INSERT INTO "item_type" ("name") VALUES ("BOOK")`);
+    await queryRunner.query(`INSERT INTO "item_type" ("name") VALUES ("ART")`);
     await queryRunner.query(
-      `INTERT INTO "item_type" ("name") VALUES ("LIGHT_NOVEL")`,
+      `INSERT INTO "item_type" ("name") VALUES ("LIGHT_NOVEL")`,
     );
     await queryRunner.query(
       `CREATE TABLE "item" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(256) NOT NULL, "description" varchar(2048) NOT NULL, "imageUrl" varchar NOT NULL, "startDate" datetime NOT NULL, "endDate" datetime NOT NULL, "creationDate" datetime NOT NULL DEFAULT (datetime('now')), "updateDate" datetime NOT NULL DEFAULT (datetime('now')), "typeId" integer, CONSTRAINT "UQ_367ba5eac5399f1dc69337583c9" UNIQUE ("title"))`,
