@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { ValidatorsModule } from './validators/validators.module';
 import TypeOrmConfig from './typeorm.config';
 import { ConfigModule } from '@nestjs/config';
+import { ItemsModule } from './items/items.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { ConfigModule } from '@nestjs/config';
     UsersModule,
     AuthModule,
     ValidatorsModule,
+    ItemsModule,
   ],
   controllers: [],
   providers: [],
