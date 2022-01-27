@@ -9,7 +9,6 @@ import {
 import * as bcrypt from 'bcrypt';
 import { IsEmail } from 'class-validator';
 import { UserRole } from './role.entity';
-import { Exclude } from 'class-transformer';
 
 @Entity()
 export class User {
