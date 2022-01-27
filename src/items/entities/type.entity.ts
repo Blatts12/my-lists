@@ -10,3 +10,14 @@ export class ItemType {
   })
   name: string;
 }
+
+export enum ItemTypeEnum {
+  MOVIE,
+  SERIES,
+  ANIME_MOVIE,
+  ANIME_SERIES,
+  MANGA,
+  BOOK,
+  ART,
+  LIGHT_NOVEL,
+}
