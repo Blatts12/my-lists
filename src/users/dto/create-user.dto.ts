@@ -6,7 +6,7 @@ import {
   MinLength,
   Validate,
 } from 'class-validator';
-import { Unique } from 'src/validators/unique.validator';
+import { Unique } from 'src/validators/unique/unique.validator';
 import { User } from '../entities/user.entity';
 
 export class CreateUserDto {

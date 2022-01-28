@@ -1,15 +1,15 @@
+import { Type } from 'class-transformer';
 import {
   IsDate,
-  IsEnum,
   IsOptional,
   IsString,
   IsUrl,
   MaxLength,
   Validate,
 } from 'class-validator';
-import { Unique } from 'typeorm';
+import { Unique } from 'src/validators/unique/unique.validator';
 import { Item } from '../entities/item.entity';
-import { ItemTypeEnum } from '../entities/type.entity';
+import { ItemType } from '../entities/type.entity';
 
 export class CreateItemDto {
   @IsString()
@@ -30,8 +30,8 @@ export class CreateItemDto {
   @IsUrl()
   imageUrl: string;
 
-  @IsEnum(ItemTypeEnum)
-  type: string;
+  @Type(() => ItemType)
+  type: ItemType;
 
   @IsDate()
   @IsOptional()

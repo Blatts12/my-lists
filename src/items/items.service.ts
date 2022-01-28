@@ -13,14 +13,6 @@ export class ItemsService {
     @InjectRepository(ItemType) private typeRepository: Repository<ItemType>,
   ) {}
 
-  private async getType(typeName: string): Promise<ItemType> {
-    return this.typeRepository.findOne({
-      where: {
-        name: typeName,
-      },
-    });
-  }
-
   async findAllTypes(): Promise<ItemType[]> {
     return this.typeRepository.find();
   }
@@ -28,7 +20,6 @@ export class ItemsService {
   async create(createItemDto: CreateItemDto): Promise<Item> {
     const newItem = this.itemRepository.create({
       ...createItemDto,
-      type: await this.getType(createItemDto.type),
     });
 
     return this.itemRepository.save(newItem);
@@ -63,7 +54,6 @@ export class ItemsService {
     return this.itemRepository.save({
       ...oldItem,
       ...updateItemDto,
-      type: await this.getType(updateItemDto.type),
     });
   }
 
