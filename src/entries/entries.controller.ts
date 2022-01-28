@@ -26,6 +26,11 @@ export class EntriesController {
     return this.entriesService.findAll();
   }
 
+  @Get('statuses')
+  findAllStatuses() {
+    return this.entriesService.findAllStatuses();
+  }
+
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.entriesService.findOneById(id);
