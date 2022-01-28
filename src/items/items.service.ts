@@ -21,6 +21,10 @@ export class ItemsService {
     });
   }
 
+  async findAllTypes(): Promise<ItemType[]> {
+    return this.typeRepository.find();
+  }
+
   async create(createItemDto: CreateItemDto): Promise<Item> {
     const newItem = this.itemRepository.create({
       ...createItemDto,

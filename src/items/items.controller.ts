@@ -26,6 +26,11 @@ export class ItemsController {
     return this.itemsService.findAll();
   }
 
+  @Get('types')
+  findAllTypes() {
+    return this.itemsService.findAllTypes();
+  }
+
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.itemsService.findOneById(id);
