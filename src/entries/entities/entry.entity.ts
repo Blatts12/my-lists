@@ -34,11 +34,7 @@ export class Entry {
   })
   status: Status;
 
-  @Column()
-  list_id: number;
-
   @ManyToOne(() => List)
-  @JoinColumn({ name: 'list_id', referencedColumnName: 'id' })
   list: List;
 
   @Column({

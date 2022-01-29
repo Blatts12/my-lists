@@ -22,10 +22,9 @@ export class List {
   title: string;
 
   @Column()
-  user_id: number;
+  private: boolean;
 
   @ManyToOne(() => User)
-  @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   user: User;
 
   @OneToMany(() => Entry, (entry) => entry.list)
