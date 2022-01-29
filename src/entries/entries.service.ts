@@ -43,8 +43,6 @@ export class EntriesService {
   }
 
   async remove(id: number) {
-    return this.entryRepository.delete({
-      id,
-    });
+    return this.entryRepository.delete(id);
   }
 }

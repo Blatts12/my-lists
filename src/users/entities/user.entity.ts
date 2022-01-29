@@ -31,7 +31,9 @@ export class User {
   @Column()
   password: string;
 
-  @ManyToOne(() => UserRole)
+  @ManyToOne(() => UserRole, {
+    eager: true,
+  })
   role: UserRole;
 
   @Column({

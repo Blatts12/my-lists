@@ -17,7 +17,9 @@ export class Entry {
   @Column()
   score: number;
 
-  @ManyToOne(() => Item)
+  @ManyToOne(() => Item, {
+    eager: true,
+  })
   item: Item;
 
   @Column({
@@ -25,7 +27,9 @@ export class Entry {
   })
   comment: string;
 
-  @ManyToOne(() => Status)
+  @ManyToOne(() => Status, {
+    eager: true,
+  })
   status: Status;
 
   @Column({

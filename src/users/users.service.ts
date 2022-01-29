@@ -12,12 +12,8 @@ export class UsersService {
     @InjectRepository(UserRole) private roleRepository: Repository<UserRole>,
   ) {}
 
-  private async getRole(roleName: string): Promise<UserRole> {
-    return this.roleRepository.findOne({
-      where: {
-        name: roleName,
-      },
-    });
+  private async getRole(name: string): Promise<UserRole> {
+    return this.roleRepository.findOne({ name });
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
@@ -30,26 +26,14 @@ export class UsersService {
   }
 
   async findOneByEmail(email: string): Promise<User | undefined> {
-    return this.userRepository
-      .createQueryBuilder('user')
-      .where({ email })
-      .leftJoinAndSelect('user.role', 'role')
-      .getOne();
+    return this.userRepository.findOne({ email });
   }
 
   async findOneByUsername(username: string): Promise<User | undefined> {
-    return this.userRepository
-      .createQueryBuilder('user')
-      .where({ username })
-      .leftJoinAndSelect('user.role', 'role')
-      .getOne();
+    return this.userRepository.findOne({ username });
   }
 
   async findOneById(id: number): Promise<User | undefined> {
-    return this.userRepository
-      .createQueryBuilder('user')
-      .where({ id })
-      .leftJoinAndSelect('user.role', 'role')
-      .getOne();
+    return this.userRepository.findOne(id);
   }
 }

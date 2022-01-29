@@ -27,7 +27,9 @@ export class Item {
   @Column()
   imageUrl: string;
 
-  @ManyToOne(() => ItemType)
+  @ManyToOne(() => ItemType, {
+    eager: true,
+  })
   type: ItemType;
 
   @Column()

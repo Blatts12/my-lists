@@ -30,19 +30,13 @@ export class ItemsService {
   }
 
   async findOneById(id: number): Promise<Item | undefined> {
-    return this.itemRepository
-      .createQueryBuilder('item')
-      .where({ id })
-      .leftJoinAndSelect('item.type', 'type')
-      .getOne();
+    return this.itemRepository.findOne(id);
   }
 
   async findOneByTitle(title: string): Promise<Item | undefined> {
-    return this.itemRepository
-      .createQueryBuilder('item')
-      .where({ title })
-      .leftJoinAndSelect('item.type', 'type')
-      .getOne();
+    return this.itemRepository.findOne({
+      title,
+    });
   }
 
   async update(
