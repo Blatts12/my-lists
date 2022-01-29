@@ -7,6 +7,7 @@ import TypeOrmConfig from './typeorm.config';
 import { ConfigModule } from '@nestjs/config';
 import { ItemsModule } from './items/items.module';
 import { EntriesModule } from './entries/entries.module';
+import { ListsModule } from './lists/lists.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { EntriesModule } from './entries/entries.module';
     ValidatorsModule,
     ItemsModule,
     EntriesModule,
+    ListsModule,
   ],
   controllers: [],
   providers: [],
