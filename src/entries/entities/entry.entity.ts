@@ -1,8 +1,10 @@
 import { Item } from 'src/items/entities/item.entity';
+import { List } from 'src/lists/entities/list.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -31,6 +33,13 @@ export class Entry {
     eager: true,
   })
   status: Status;
+
+  @Column()
+  list_id: number;
+
+  @ManyToOne(() => List)
+  @JoinColumn({ name: 'list_id', referencedColumnName: 'id' })
+  list: List;
 
   @Column({
     nullable: true,

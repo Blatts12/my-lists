@@ -4,11 +4,13 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { IsEmail } from 'class-validator';
 import { UserRole } from './role.entity';
+import { List } from 'src/lists/entities/list.entity';
 
 @Entity()
 export class User {
@@ -35,6 +37,9 @@ export class User {
     eager: true,
   })
   role: UserRole;
+
+  @OneToMany(() => List, (list) => list.user)
+  lists: List[];
 
   @Column({
     default: true,
