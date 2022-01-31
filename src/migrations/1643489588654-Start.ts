@@ -1,9 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class StartUserEntryListStatusTypeRole1643481332778
-  implements MigrationInterface
-{
-  name = 'StartUserEntryListStatusTypeRole1643481332778';
+export class Start1643489588654 implements MigrationInterface {
+  name = 'Start1643489588654';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -19,7 +17,7 @@ export class StartUserEntryListStatusTypeRole1643481332778
       `CREATE TABLE "user" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "username" varchar(64) NOT NULL, "email" varchar(256) NOT NULL, "password" varchar NOT NULL, "active" boolean NOT NULL DEFAULT (1), "createdDate" datetime NOT NULL DEFAULT (datetime('now')), "roleId" integer, CONSTRAINT "UQ_78a916df40e02a9deb1c4b75edb" UNIQUE ("username"), CONSTRAINT "UQ_e12875dfb3b1d92d7d7c5377e22" UNIQUE ("email"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "list" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(128) NOT NULL, "private" boolean NOT NULL, "userId" integer, CONSTRAINT "unique_list" UNIQUE ("title", "userId"))`,
+      `CREATE TABLE "list" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(128) NOT NULL, "userId" integer, CONSTRAINT "unique_list" UNIQUE ("title", "userId"))`,
     );
     await queryRunner.query(
       `CREATE TABLE "status" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar NOT NULL, CONSTRAINT "UQ_95ff138b88fdd8a7c9ebdb97a32" UNIQUE ("name"))`,
@@ -44,10 +42,10 @@ export class StartUserEntryListStatusTypeRole1643481332778
     await queryRunner.query(`DROP TABLE "user"`);
     await queryRunner.query(`ALTER TABLE "temporary_user" RENAME TO "user"`);
     await queryRunner.query(
-      `CREATE TABLE "temporary_list" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(128) NOT NULL, "private" boolean NOT NULL, "userId" integer, CONSTRAINT "unique_list" UNIQUE ("title", "userId"), CONSTRAINT "FK_46ded14b26382088c9f032f8953" FOREIGN KEY ("userId") REFERENCES "user" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION)`,
+      `CREATE TABLE "temporary_list" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(128) NOT NULL, "userId" integer, CONSTRAINT "unique_list" UNIQUE ("title", "userId"), CONSTRAINT "FK_46ded14b26382088c9f032f8953" FOREIGN KEY ("userId") REFERENCES "user" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION)`,
     );
     await queryRunner.query(
-      `INSERT INTO "temporary_list"("id", "title", "private", "userId") SELECT "id", "title", "private", "userId" FROM "list"`,
+      `INSERT INTO "temporary_list"("id", "title", "userId") SELECT "id", "title", "userId" FROM "list"`,
     );
     await queryRunner.query(`DROP TABLE "list"`);
     await queryRunner.query(`ALTER TABLE "temporary_list" RENAME TO "list"`);
@@ -59,7 +57,6 @@ export class StartUserEntryListStatusTypeRole1643481332778
     );
     await queryRunner.query(`DROP TABLE "entry"`);
     await queryRunner.query(`ALTER TABLE "temporary_entry" RENAME TO "entry"`);
-
     // Default inserts
     await queryRunner.query(
       `INSERT INTO "item_type" ("name") VALUES ("MOVIE")`,
@@ -108,10 +105,10 @@ export class StartUserEntryListStatusTypeRole1643481332778
     await queryRunner.query(`DROP TABLE "temporary_entry"`);
     await queryRunner.query(`ALTER TABLE "list" RENAME TO "temporary_list"`);
     await queryRunner.query(
-      `CREATE TABLE "list" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(128) NOT NULL, "private" boolean NOT NULL, "userId" integer, CONSTRAINT "unique_list" UNIQUE ("title", "userId"))`,
+      `CREATE TABLE "list" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(128) NOT NULL, "userId" integer, CONSTRAINT "unique_list" UNIQUE ("title", "userId"))`,
     );
     await queryRunner.query(
-      `INSERT INTO "list"("id", "title", "private", "userId") SELECT "id", "title", "private", "userId" FROM "temporary_list"`,
+      `INSERT INTO "list"("id", "title", "userId") SELECT "id", "title", "userId" FROM "temporary_list"`,
     );
     await queryRunner.query(`DROP TABLE "temporary_list"`);
     await queryRunner.query(`ALTER TABLE "user" RENAME TO "temporary_user"`);

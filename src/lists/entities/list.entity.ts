@@ -3,7 +3,6 @@ import { User } from 'src/users/entities/user.entity';
 import {
   Column,
   Entity,
-  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -20,9 +19,6 @@ export class List {
     length: 128,
   })
   title: string;
-
-  @Column()
-  private: boolean;
 
   @ManyToOne(() => User)
   user: User;

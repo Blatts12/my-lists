@@ -7,16 +7,19 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { ItemsService } from './items.service';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
+import { AuthenticatedGuard } from 'src/auth/authenticated.guard';
 
 @Controller('items')
 export class ItemsController {
   constructor(private readonly itemsService: ItemsService) {}
 
   @Post()
+  @UseGuards(AuthenticatedGuard)
   create(@Body() createItemDto: CreateItemDto) {
     return this.itemsService.create(createItemDto);
   }
@@ -37,6 +40,7 @@ export class ItemsController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthenticatedGuard)
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateItemDto: UpdateItemDto,
@@ -45,6 +49,7 @@ export class ItemsController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthenticatedGuard)
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.itemsService.remove(id);
   }

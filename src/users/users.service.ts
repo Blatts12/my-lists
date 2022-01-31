@@ -36,4 +36,11 @@ export class UsersService {
   async findOneById(id: number): Promise<User | undefined> {
     return this.userRepository.findOne(id);
   }
+
+  async findListsForUser(user: User) {
+    return this.userRepository.findOne({
+      relations: ['lists'],
+      where: { id: user.id },
+    });
+  }
 }

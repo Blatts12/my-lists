@@ -7,23 +7,23 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { EntriesService } from './entries.service';
 import { CreateEntryDto } from './dto/create-entry.dto';
 import { UpdateEntryDto } from './dto/update-entry.dto';
+import { EntityName, IsOwnerGuard } from 'src/users/is-owner.guard';
+import { AuthenticatedGuard } from 'src/auth/authenticated.guard';
 
 @Controller('entries')
+@EntityName('entry')
 export class EntriesController {
   constructor(private readonly entriesService: EntriesService) {}
 
   @Post()
+  @UseGuards(AuthenticatedGuard)
   create(@Body() createEntryDto: CreateEntryDto) {
     return this.entriesService.create(createEntryDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.entriesService.findAll();
   }
 
   @Get('statuses')
@@ -31,12 +31,8 @@ export class EntriesController {
     return this.entriesService.findAllStatuses();
   }
 
-  @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.entriesService.findOneById(id);
-  }
-
   @Patch(':id')
+  @UseGuards(AuthenticatedGuard, IsOwnerGuard)
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateEntryDto: UpdateEntryDto,
@@ -45,6 +41,7 @@ export class EntriesController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthenticatedGuard, IsOwnerGuard)
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.entriesService.remove(id);
   }
