@@ -1,6 +1,6 @@
 import { Type } from 'class-transformer';
 import {
-  IsDate,
+  IsDateString,
   IsOptional,
   IsString,
   IsUrl,
@@ -33,11 +33,11 @@ export class CreateItemDto {
   @Type(() => ItemType)
   type: ItemType;
 
-  @IsDate()
+  @IsDateString()
   @IsOptional()
   startDate?: Date;
 
-  @IsDate()
+  @IsDateString()
   @IsOptional()
   endDate?: Date;
 }

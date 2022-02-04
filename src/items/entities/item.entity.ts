@@ -32,10 +32,14 @@ export class Item {
   })
   type: ItemType;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   startDate: Date;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   endDate: Date;
 
   @CreateDateColumn()
