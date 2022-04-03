@@ -8,6 +8,7 @@ import {
   Delete,
   ParseIntPipe,
   UseGuards,
+  NotFoundException,
 } from '@nestjs/common';
 import { ItemsService } from './items.service';
 import { CreateItemDto } from './dto/create-item.dto';
@@ -35,8 +36,10 @@ export class ItemsController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.itemsService.findOneById(id);
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    const item = await this.itemsService.findOneById(id);
+    if (!item) throw new NotFoundException();
+    return item;
   }
 
   @Patch(':id')
